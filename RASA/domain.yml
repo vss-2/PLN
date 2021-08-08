@@ -1,0 +1,93 @@
+session_config:
+    session_expiration_time: 60
+    carry_over_splots_to_new_session: true
+
+intents:
+# Juntei alguns que tinham um +
+- aircraft_info
+- airline_find
+- airport_info
+- distance
+- flight_info
+- ground_info
+# - ground_fare
+# - ground_service
+- meal
+
+entities:
+- origin_city
+- destination_city
+# boto os 2 ou só 1?
+- city
+- airport
+- hour
+- day
+- month
+- price
+- flight_number
+- air_company
+- aircraft
+- fare
+
+slots:
+    destination_city: 
+        type: text
+    origin_city: 
+        type: text
+    city:
+        type: text
+    airport:
+        type: text
+    hour:
+        # Pode ser número ou por extenso
+        type: any
+    day:
+        type: any
+    month:
+        type: text
+    price:
+        type: text
+    flight_number:
+        type: text
+    air_company:
+        type: text
+    aircraft:
+        type: text
+    fare:
+        type: text
+
+responses:
+    utter_greet:
+        - text: Hey there, my name is Brisa.
+        - text: Hi, I'm Brisa!
+        - text: Hi! My name's Brisa.
+    utter_greet_noname:
+        - text: Hey!
+        - text: Hi!
+        - text: Hey there!
+    utter_react_negative:
+        - text: 😕
+        - text: 😞
+        - text: 😥
+        - text: 😢
+    utter_react_positive:
+        - text: 😄
+        - text: 😊
+        - text: 👏
+        - text: 😍
+    utter_no_available_flights:
+        - text: I'm sorry, I didn't find any flight available for the period that you've asked
+    utter_show_available_flight:
+        - text: "I've found this flight: Flight {flight_number} from {origin_city} to {destination_city} at {hour} on {month} {day}."
+    utter_find_flight_price:
+        - text: "I've found this flight: Flight {flight_number} from {origin_city} to {destination_city} at {hour} on {month} {day} costing {price} dollars."
+
+forms:
+    find_flight_form:
+        required_slots:
+            origin_city:
+            - entity: origin_city
+                type: from_entity
+            destination_city:
+            - entity: destination_city
+                type: from_entity
