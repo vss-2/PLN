@@ -29,7 +29,9 @@ entities:
 - flight_number
 - air_company
 - aircraft
-- fare
+- airfare
+- ground_services
+- distance
 
 slots:
     destination_city: 
@@ -77,6 +79,8 @@ responses:
         - text: 😊
         - text: 👏
         - text: 😍
+    utter_ask_name:
+        - text: What's your name?
     utter_no_available_flights:
         - text: I'm sorry, I didn't find any flight available for the period that you've asked
     utter_show_available_flight:
@@ -85,13 +89,21 @@ responses:
         - text: "I've found this flight: Flight {flight_number} from {origin_city} to {destination_city} at {hour} on {month} {day} costing {price} dollars."
     utter_find_flight:
         - text: "OK, I'll try to find this flight for you"
+    utter_find_airfare:
+        - text: The airfare price is {airfare}
+    utter_confirm_ground_services:
+        - text: Yes, this airport can offer {ground_services} 
+    utter_deny_ground_services:
+        - text: Unfortunately, these services are not available {ground_services} 
+    utter_distance:
+        - text: The distance from {city} to {airport} is {distance} miles
 
 forms:
     find_flight_form:
         required_slots:
             origin_city:
             - entity: origin_city
-            - type: from_entity
+              type: from_entity
             destination_city:
             - entity: destination_city
-            - type: from_entity
+              type: from_entity

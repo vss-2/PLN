@@ -1,12 +1,12 @@
 version: "2.0"
 
-stores:
-- story: intro
-  steps:
-    - intent: greet
-    - action: utter_greet
-
-# - story: find flight price
+stories:
+# - story: intro
 #   steps:
-#     - intent: airline_find
-#     - action: utter_find_flight_price
+#   - intent: greet
+#   - action: utter_greet
+
+- story: find flight price
+  steps:
+  - intent: airline_find
+  - action: utter_find_flight_price
