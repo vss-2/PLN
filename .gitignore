@@ -1,0 +1,5 @@
+rasa-env/lib/
+rasa-env/lib64/
+rasa-env/share/
+rasa-env/include/
+rasa-env/bin/

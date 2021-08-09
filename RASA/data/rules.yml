@@ -1,5 +1,0 @@
-rules:
-- rule: find flight
-    steps:
-    - intent: airline_find
-    - action: utter_find_flight
