@@ -6,7 +6,7 @@ stores:
     - intent: greet
     - action: utter_greet
 
-- story: find flight price
-  steps:
-    - intent: airline_find
-    - action: utter_find_flight_price
+# - story: find flight price
+#   steps:
+#     - intent: airline_find
+#     - action: utter_find_flight_price

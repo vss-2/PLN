@@ -83,6 +83,8 @@ responses:
         - text: "I've found this flight: Flight {flight_number} from {origin_city} to {destination_city} at {hour} on {month} {day}."
     utter_find_flight_price:
         - text: "I've found this flight: Flight {flight_number} from {origin_city} to {destination_city} at {hour} on {month} {day} costing {price} dollars."
+    utter_find_flight:
+        - text: "OK, I'll try to find this flight for you"
 
 forms:
     find_flight_form:
@@ -93,6 +95,3 @@ forms:
             destination_city:
             - entity: destination_city
             - type: from_entity
-
-actions: 
-    - utter_find_flight
