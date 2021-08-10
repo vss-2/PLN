@@ -8,5 +8,7 @@ stories:
 
 - story: find flight price
   steps:
-  - intent: airline_find
-  - action: utter_find_flight_price
+  - active_loop: find_flight
+  - intent: airfare_find
+  - action: find_flight
+  - active_loop: null

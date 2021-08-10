@@ -1,31 +1,29 @@
 version: "2.0"
 
 nlu:
-    - intent: airline_find
-      examples: |
-            - I would like a flight from Orlando to Salt Lake City
-            - I would like to fly from Columbus to Indianapolis 
-            - Find a flight from Memphis to Tacoma dinner 
-            - Show flights from Burbank to Milwaukee
-            - What flights travel from Las Vegas to Los Angeles
-            - Which flights travel from Tacoma to San Jose 
-            - I need a flight from Charlotte to Miami
-            - Please find a flight from Las Vegas to Michigan
-            - I'd like to fly from San Diego to Houston
-            - List the flights from Memphis to Cleveland 
     - intent: airfare_find
       examples: |
-            - cheapest airfare from tacoma to orlando 
-            - round trip fares from pittsburgh to philadelphia under 1000 dollars 
-            - show me the first class fares from boston to denver 
-            - i 'd like to have some information on a ticket from denver to pittsburgh and atlanta 
+            - I would like a flight from [Orlando](origin_city) to [Salt Lake City](destination_city)
+            - I would like to fly from [Columbus](origin_city) to [Indianapolis](destination_city) 
+            - Find a flight from [Memphis](origin_city) to [Tacoma](destination_city) dinner
+            - Show flights from [Burbank](origin_city) to [Milwaukee](destination_city)
+            - What flights travel from [Las Vegas](origin_city) to [Los Angeles](destination_city)
+            - Which flights travel from [Tacoma](origin_city) to [San Jose](destination_city) 
+            - I need a flight from [Charlotte](origin_city) to [Miami](destination_city)
+            - Please find a flight from [Las Vegas](origin_city) to [Michigan](destination_city)
+            - I'd like to fly from [San Diego](origin_city) to [Houston](destination_city)
+            - List the flights from [Memphis](origin_city) to [Cleveland](destination_city) 
+            - cheapest airfare from [tacoma](origin_city) to [orlando](destination_city) 
+            - round trip fares from [pittsburgh](origin_city) to [philadelphia](destination_city) under 1000 dollars 
+            - show me the first class fares from [boston](origin_city) to [denver](destination_city)
+            - i 'd like to have some information on a ticket from denver to [pittsburgh](origin_city) and [atlanta](destination_city)
     - intent: ground_services
       examples: |
-            - atlanta ground transportation 
-            - show me the ground transportation in denver 
-            - what kind of ground transportation is available in denver 
-            - show me information on ground transportation for dallas 
+            - [atlanta](city) ground transportation 
+            - show me the ground transportation in [denver](city)
+            - what kind of ground transportation is available in [denver](city)
+            - show me information on ground transportation for [dallas](city) 
     - intent: distance
       examples: |
-            - how far is it from orlando airport to orlando 
-            - what's the distance between times square and jfk airport
+            - how far is it from [orlando airport](airport) to [orlando](city)
+            - what's the distance between [newark](city) and [jfk](airport)

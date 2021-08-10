@@ -7,7 +7,7 @@ session_config:
 intents:
 # Juntei alguns que tinham um +
 - aircraft_info
-- airline_find
+- airfare_find
 - airport_info
 - distance
 - flight_info
@@ -19,7 +19,7 @@ intents:
 entities:
 - origin_city
 - destination_city
-# boto os 2 ou só 1?
+# coloco os 2 ou só 1?
 - city
 - airport
 - hour
@@ -97,13 +97,19 @@ responses:
         - text: Unfortunately, these services are not available {ground_services} 
     utter_distance:
         - text: The distance from {city} to {airport} is {distance} miles
+    airfare_find:
+        - text: "Here are some flights I've found according to what you asked: from {origin_city} to {destination_city}"
+
+# Actions
+actions:
+- find_flight
 
 forms:
-    find_flight_form:
+    find_flight:
         required_slots:
             origin_city:
             - entity: origin_city
-              type: from_entity
+              type: from_text
             destination_city:
             - entity: destination_city
-              type: from_entity
+              type: from_text
