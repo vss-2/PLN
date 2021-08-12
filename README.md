@@ -9,8 +9,11 @@ Repositório da disciplina de Processamento de Linguagem Natural [(IF704)](https
 ` Windows (PowerShell): \rasa-env\bin\Activate.ps1 `
 
 ## Como conversar com nosso chatbot
-` rasa train `
+` rasa train `<br>
 ` rasa shell `
+
+## Executar servidor de actions
+` rasa run actions `
 
 #### Obs: para Windows pode ser necessário executar e confirmar: 
 ``` Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned ```
