@@ -3,6 +3,17 @@ rasa-env/lib64/
 rasa-env/share/
 rasa-env/include/
 rasa-env/bin/
+!rasa-env/bin/activate
+!rasa-env/bin/Activate.ps1
 rasa-env/RASA/models/
 __pycache__/
 node_modules/
+
+extrator/lib/
+extrator/lib64/
+extrator/share/
+extrator/include/
+extrator/bin/*
+!/extrator/bin/activate
+!/extrator/bin/Activate.ps1
+extrator/RASA/models/
