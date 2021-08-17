@@ -4,13 +4,8 @@ import numpy as np
 import pandas as pd
 import nltk
 import spacy
-# import en_core_web_sm
 import tensorflow as tf
-from pprint import pprint
-from pandas import read_csv
 from pandas import DataFrame
-from http import server
-from sklearn.model_selection import train_test_split
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense
 from spacy.lang.en.examples import sentences 
@@ -20,18 +15,15 @@ from keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.layers.experimental.preprocessing import TextVectorization
 from tensorflow.keras.layers import Bidirectional
 from tensorflow.keras.layers import LSTM as LSTM
-from nltk.chunk import conlltags2tree, tree2conlltags, ne_chunk
+from nltk.chunk import tree2conlltags, ne_chunk
 from nltk import word_tokenize
 from subprocess import call
-from spacy import displacy
-from collections import Counter
+
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 nltk.download('maxent_ne_chunker')
 nltk.download('words')
 # spacy_nlp = spacy.load("en_core_web_sm")
-
-global model
 
 if 'input' not in os.listdir(os.getcwd()):
     call(['bash', 'init.sh'])
@@ -110,18 +102,18 @@ def main():
             for t in train_ds['query'] for i in t]
     c = 10
     x = 0
-    print('{} Frases:\n'.format(c))
-    for f in frases:
-        if f == 'EOS':
-            print('\n', 'Intent: ', list(dicts['intent_ids'].keys())[
-                train_ds['intent_labels'][x][0]], '\n', sep='')
-            x = x + 1
-            if x == c:
-                break
-        elif f == 'BOS':
-            pass
-        else:
-            print(f, sep='', end=' ')
+    # print('{} Frases:\n'.format(c))
+    # for f in frases:
+    #     if f == 'EOS':
+    #         print('\n', 'Intent: ', list(dicts['intent_ids'].keys())[
+    #             train_ds['intent_labels'][x][0]], '\n', sep='')
+    #         x = x + 1
+    #         if x == c:
+    #             break
+    #     elif f == 'BOS':
+    #         pass
+    #     else:
+    #         print(f, sep='', end=' ')
 
     X_train = []
     X_test = []
@@ -223,7 +215,7 @@ def main():
     X_test = DataFrame(X_test)
     encoder.adapt(X_train.values)
 
-    model = Sequential([
+    running_model = Sequential([
         encoder,
         Embedding(
             input_dim=len(encoder.get_vocabulary()),
@@ -233,20 +225,21 @@ def main():
         Dense(num_intents, activation='softmax')
     ])
 
-    model.compile(loss=tf.keras.losses.CategoricalCrossentropy(),
+    running_model.compile(loss=tf.keras.losses.CategoricalCrossentropy(),
                 optimizer=tf.keras.optimizers.Adam(1e-4),
                 metrics=['accuracy'])
     print('Tamanho Xtrain e ytrain:', len(X_train), len(y_train))
 
     # model.fit(X_train, y_train, epochs=20)
-    model.fit(X_train, y_train, epochs=20)
+    running_model.fit(X_train, y_train, epochs=5)
 
-    loss, accuracy = model.evaluate(X_train, y_train, verbose=1)
+    loss, accuracy = running_model.evaluate(X_train, y_train, verbose=1)
     print('Training Accuracy is {}'.format(accuracy*100))
 
-    loss, accuracy = model.evaluate(X_test, y_test, verbose=1)
+    loss, accuracy = running_model.evaluate(X_test, y_test, verbose=1)
     print('Test Accuracy is {}'.format(accuracy*100))
-
+    # running_model
+    # print(model.predict(["I would like to find informations about flights from New York to San Francisco"]))
     # Colar código testando frases pra ver se ele tá com predict bom
 
     # Célula 6 NER
@@ -320,13 +313,6 @@ def main():
         train_ds.get, ['query', 'slot_labels', 'intent_labels'])
     queryTest, _void, __void = map(
         test_ds.get, ['query', 'slot_labels', 'intent_labels'])
-    # len(queryTrain) == len(X_train)
-    # print(len(labels))
-    # print(len(label2idx))
-    # print(len(idx2char))
-    # print(len(idx2label))
-    # print(len(char2idx))
-
 
     t2i, s2i, in2i = map(dicts.get, ['token_ids', 'slot_ids', 'intent_ids'])
     i2t, i2s, i2in = map(lambda d: {d[k]: k for k in d.keys()}, [t2i, s2i, in2i])
@@ -390,17 +376,9 @@ def main():
             k.append(i2t[query[i][j]])
         test.append([k, x])
 
-    # pprint(palavras_train)
-    # return
 
     # test, test_slots, test_intent =  map(test_ds.get, ['query', 'slot_labels', 'intent_labels'])
     # / train_slots, train_intent =  map(train_ds.get, ['query', 'slot_labels', 'intent_labels'])
-
-
-    # for i in range(len(query)):
-    #     for j in range(len(query[i])):
-    #         labels.add(i2s[slots[i][j]])
-
 
     def split_char_labels(eg):
         tokens = eg[0]
@@ -469,11 +447,6 @@ def main():
     ds_series_batch_test = series_test.padded_batch(
         BATCH_SIZE, padded_shapes=([None], [None]), drop_remainder=True)
 
-    # print example batches
-    # for input_example_batch, target_example_batch in ds_series_batch_valid.take(1):
-    # print(input_example_batch)
-    # print(target_example_batch)
-
     vocab_size = len(vocab)+1
 
     # The embedding dimension
@@ -486,32 +459,31 @@ def main():
 
     # build LSTM model
 
+    # def build_model(vocab_size, label_size, embedding_dim, rnn_units, batch_size):
+    #     model = tf.keras.Sequential([
+    #         tf.keras.layers.Embedding(vocab_size, embedding_dim,
+    #                                 batch_input_shape=[batch_size, None], mask_zero=True),
+    #         tf.keras.layers.LSTM(rnn_units,
+    #                             return_sequences=True,
+    #                             stateful=True,
+    #                             recurrent_initializer='glorot_uniform'),
+    #         tf.keras.layers.Dense(label_size)
+    #     ])
+    #     return model
 
-    def build_model(vocab_size, label_size, embedding_dim, rnn_units, batch_size):
-        model = tf.keras.Sequential([
-            tf.keras.layers.Embedding(vocab_size, embedding_dim,
-                                    batch_input_shape=[batch_size, None], mask_zero=True),
-            tf.keras.layers.LSTM(rnn_units,
-                                return_sequences=True,
-                                stateful=True,
-                                recurrent_initializer='glorot_uniform'),
-            tf.keras.layers.Dense(label_size)
-        ])
-        return model
+    # model = build_model(
+    #     vocab_size=len(vocab)+1,
+    #     label_size=len(labels)+1,
+    #     embedding_dim=embedding_dim,
+    #     rnn_units=rnn_units,
+    #     batch_size=BATCH_SIZE
+    # )
 
+    # model.summary()
+    return running_model, intent_map
 
-    model = build_model(
-        vocab_size=len(vocab)+1,
-        label_size=len(labels)+1,
-        embedding_dim=embedding_dim,
-        rnn_units=rnn_units,
-        batch_size=BATCH_SIZE
-    )
-
-    model.summary()
-    return model
-
-# model = main()
+predictions, intents_to_predict = None, None
+predictions, intents_to_predict = main()
 
 def entities_extract(frase):
     nnp = nltk.pos_tag(word_tokenize(frase))
@@ -542,7 +514,15 @@ def entities_extract(frase):
 def testeNLP(frase: str = 'I would like to find a flight from Houston to Dallas'):
     nlp = spacy.load("en_core_web_sm")
     doc = nlp(frase)
+    
+    result = predictions.predict([frase])
+    result = list(result[0])
+    intents = list(intents_to_predict.values())
+    intention = list(intents_to_predict)[intents[result.index(max(result))]]
+    print('Extracted intention: ', intention)
+    
     print(*[(X.text, X.label_) for X in doc.ents])
     entidades = [(X.text, X.label_) for X in doc.ents]
+    entidades.append([intention, 'intent'])
     return entidades
 
