@@ -27,3 +27,27 @@ nlu:
       examples: |
             - how far is it from [orlando airport](airport) to [orlando](city)
             - what's the distance between [newark](city) and [jfk](airport)
+    - intent: curiosity
+      examples: |
+            - when was the first flight of the [Zeppelin-Staaken R.VI](aircraft) plane?
+            - when did the [Zeppelin-Staaken R.VI](aircraft) plane take off for the first time?
+            - when was the first time the [Zeppelin-Staaken R.VI](aircraft) took off?
+            - what was the date of the first time the [Dornier Do X](aircraft) flew?
+            - What is the type of the [Dornier Do X](aircraft) plane?
+            - What type is the [Dornier Do X](aircraft) aircraft?
+            - What is the typing of the [Kalinin K-7](aircraft) aircraft?
+            - How many times was the [Kalinin K-7](aircraft) plane built?
+            - How many times has [Kalinin K-7](aircraft) been built?
+            - Show me how many times the [Tupolev ANT-20](aircraft) aircraft was built
+            - Tell me how many times the [Tupolev ANT-20](aircraft) plane was built
+            - How long is the [Tupolev ANT-20](aircraft) plane?
+            - Tell me the length of the [Douglas XB-19](aircraft) aircraft
+            - Show me the length of the [Douglas XB-19](aircraft) plane
+            - How long was the [Douglas XB-19](aircraft) plane?
+            - How wide is the [Messerschmitt Me 323](aircraft) plane?
+            - Tell me the width of the [Messerschmitt Me 323](aircraft) aircraft
+            - Show me the width of the [Messerschmitt Me 323](aircraft) plane
+            - How wide was the [Martin JRM Mars](aircraft) plane?
+            - What is the maximum take-off weight or [Martin JRM Mars](aircraft) plane?
+            - With how many weights maximum does the [Martin JRM Mars](aircraft) aircraft take off?
+            - Tell me how much weight the [Latécoère 631](aircraft) plane takes off
