@@ -10,3 +10,19 @@ rules:
   steps:
   - intent: curiosity
   - action: curiosity
+
+
+- rule: Find flight
+  steps:
+  - intent: find_flight
+  - action: find_flight_form
+  - active_loop: find_flight_form
+
+- rule: Submit flight
+  condition:
+  - active_loop: find_flight_form
+  steps:
+  - action: find_flight_form
+  - active_loop: null
+  - action: utter_found_flight
+  - action: action_restart

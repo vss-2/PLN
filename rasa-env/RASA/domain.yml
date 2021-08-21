@@ -7,19 +7,17 @@ session_config:
 intents:
 # Juntei alguns que tinham um +
 - aircraft_info
-- airfare_find
 - airport_info
 - distance
 - flight_info
 - ground_info
+- find_flight
 # - ground_fare
 # - ground_service
 - meal
+- curiosity
 
 entities:
-- origin_city
-- destination_city
-# coloco os 2 ou só 1?
 - city
 - airport
 - hour
@@ -34,12 +32,12 @@ entities:
 - distance
 
 slots:
-    destination_city: 
+    from_city:
         type: text
-    origin_city: 
+        influence_conversation: false
+    destination_city:
         type: text
-    city:
-        type: text
+        influence_conversation: false
     airport:
         type: text
     hour:
@@ -65,6 +63,8 @@ responses:
         - text: Hey there, my name is Brisa.
         - text: Hi, I'm Brisa!
         - text: Hi! My name's Brisa.
+    utter_goodbye:
+        - text: Bye
     utter_greet_noname:
         - text: Hey!
         - text: Hi!
@@ -78,7 +78,13 @@ responses:
         - text: 😄
         - text: 😊
         - text: 👏
-        - text: 😍
+        - text: 😍    
+    utter_ask_destination_city:
+        - text: Where do you want to travel to?
+    utter_ask_from_city:
+        - text: Where do you want to travel from?
+    utter_found_flight:
+        - text: You will travel from {from_city} to {destination_city}.
     utter_ask_name:
         - text: What's your name?
     utter_no_available_flights:
@@ -104,13 +110,18 @@ responses:
 actions:
 - find_flight
 - curiosity
+- utter_found_flight
+- utter_goodbye
+- submit_flight_form
 
 forms:
-    find_flight:
-        required_slots:
-            origin_city:
-            - entity: origin_city
-              type: from_text
-            destination_city:
-            - entity: destination_city
-              type: from_text
+  find_flight_form:
+    required_slots:
+      from_city:
+      - type: from_entity
+        entity: city
+        role: from_city
+      destination_city:
+      - type: from_entity
+        entity: city
+        role: destination_city

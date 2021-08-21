@@ -5,10 +5,3 @@ stories:
 #   steps:
 #   - intent: greet
 #   - action: utter_greet
-
-- story: find flight price
-  steps:
-  - active_loop: find_flight
-  - intent: airfare_find
-  - action: find_flight
-  - active_loop: null
