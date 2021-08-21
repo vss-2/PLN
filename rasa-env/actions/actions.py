@@ -25,6 +25,10 @@ class ActionCuriosity(Action):
     
     def name(self) -> Text:
         return 'curiosity'
+
+    def searchCuriosity(search):
+        res = es.search(index="python-pln-elasticsearch", body={"query": {"match": {"question": "" + search + ""}}})
+        return "\n{}".format(res['hits']['hits'][0]["_source"]["answer"])
     
     def run(self, 
             dispatcher: CollectingDispatcher, 
@@ -32,12 +36,8 @@ class ActionCuriosity(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
         message = tracker.latest_message.get('text')
-        result = searchCuriosity(message)
+        result = ActionCuriosity.searchCuriosity(message)
 
         dispatcher.utter_message(text=result)
 
         return []
-
-    def searchCuriosity(search):
-        res = es.search(index="python-pln-elasticsearch", body={"query": {"match": {"question": "" + search + ""}}})
-        return "\n{}".format(res['hits']['hits'][0]["_source"]["answer"])

@@ -103,6 +103,7 @@ responses:
 # Actions
 actions:
 - find_flight
+- curiosity
 
 forms:
     find_flight:

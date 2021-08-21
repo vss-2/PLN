@@ -5,3 +5,8 @@ rules:
     #   steps:
     #   - intent: airfare_find
     #   - action: utter_find_flight
+
+- rule: Elastic Search
+  steps:
+  - intent: curiosity
+  - action: curiosity
