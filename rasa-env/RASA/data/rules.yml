@@ -33,3 +33,4 @@ rules:
   - active_loop: find_ground_form
   - active_loop: null
   - action: utter_found_ground
+  - action: submit_ground_form

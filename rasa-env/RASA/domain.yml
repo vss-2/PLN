@@ -52,7 +52,7 @@ responses:
     utter_ask_time:
         - text: When do you want to travel?
     utter_found_flight:
-        - text: You will travel from {from_city} to {destination_city} on {time}.
+        - text: "Here are the available flights from {from_city} to {destination_city} on the desired departure date:"
     utter_found_ground:
         - text: You want ground transportation on {ground_city}.
     utter_no_available_flights:
@@ -73,6 +73,7 @@ actions:
 - utter_found_flight
 - utter_goodbye
 - submit_flight_form
+- submit_ground_form
 
 forms:
   find_flight_form:
