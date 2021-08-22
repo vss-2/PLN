@@ -56,8 +56,13 @@ def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
    }
 
 class SubmitFlightForm(Action):
+    
     def name(self) -> Text:
-        return "submit_flight_form"
+        return 'submit_flight_form'
 
-    def run(self, dispatcher, tracker, domain):
+    def run(self, 
+            dispatcher: CollectingDispatcher, 
+            tracker: Tracker, 
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
         return [SlotSet("from_city", None), SlotSet("destination_city", None)]
