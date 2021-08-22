@@ -40,3 +40,5 @@ pipeline:
     url: "http://localhost:8000"
     # dimensions to extract
     dimensions: ["time"]
+    # locale: "pt_BR"
+    timezone: "America/Recife"
