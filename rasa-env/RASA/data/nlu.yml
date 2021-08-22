@@ -69,10 +69,42 @@ nlu:
     - from [Recife]{"entity": "city", "role": "from_city"}
 - intent: ground_services
   examples: |
-    - [Atlanta]{"Entity": "city", "role": "ground_city"} ground transportation 
-    - show me the ground transportation in [Denver]{"Entity": "city", "role": "ground_city"}
-    - what kind of ground transportation is available in [denver](city)
-    - show me information on ground transportation for [dallas](city) 
+    - [Atlanta]{"entity": "city", "role": "ground_city"} ground transportation
+    - show me the ground transportation in [Denver]{"entity": "city", "role": "ground_city"}
+    - what kind of ground transportation is available in [Denver]{"entity": "city", "role": "ground_city"}?
+    - show me information on ground transportation for [Dallas]{"entity": "city", "role": "ground_city"}
+    - what is the ground transportation on [Philadelphia]{"entity": "city", "role": "ground_city"}?
+    - ground transportation in [San Jose]{"entity": "city", "role": "ground_city"} 
+    - show me a list of ground transportation at [Denver]{"entity": "city", "role": "ground_city"}
+    - what is the transportation time from the airport to [Boston]{"entity": "city", "role": "ground_city"}?
+    - what kinds of ground transportation is available in [Dallas]{"entity": "city", "role": "ground_city"} fort worth?
+    - is there ground transportation available in [Denver]{"entity": "city", "role": "ground_city"}? 
+    - what kind of ground transportation can you offer me in [Seattle]{"entity": "city", "role": "ground_city"}?
+    - show me the car rentals in [Baltimore]{"entity": "city", "role": "ground_city"}
+    - how much time does it take to go between the airport and downtown by ground transportation in [Dallas]{"entity": "city", "role": "ground_city"}?
+    - ground transportation [Minneapolis]{"entity": "city", "role": "ground_city"}
+    - is there ground transportation in [Boston]{"entity": "city", "role": "ground_city"} from the airport
+    - what kind of ground transportation is there in [Washington dc]{"entity": "city", "role": "ground_city"}?
+    - what is the schedule of ground transportation from the airport in [Philadelphia]{"entity": "city", "role": "ground_city"} into downtown?
+    - ground transportation in [Westchester]{"entity": "city", "role": "ground_city"} county
+    - ground transportation [Denver]{"entity": "city", "role": "ground_city"}
+    - what is the available ground transportation between the airport in [Denver]{"entity": "city", "role": "ground_city"} and downtown?
+    - what type of ground transportation is available between the airport and downtown [San Francisco]{"entity": "city", "role": "ground_city"}?
+    - show me ground transportation in [Dallas]{"entity": "city", "role": "ground_city"} please
+    - please list ground transport in [San Francisco]{"entity": "city", "role": "ground_city"}
+    - is there ground transportation from [San Diego] airport to the downtown area?
+    - show me ground transportation in [San Francisco]{"entity": "city", "role": "ground_city"}
+    - I need ground transportation in Dallas please show me what is available
+    - is there ground transportation in [Oakland]{"entity": "city", "role": "ground_city"}?
+    - what's the ground transportation like at [Pittsburgh]{"entity": "city", "role": "ground_city"}?
+    - show me ground transportation information for [pittsburgh]{"entity": "city", "role": "ground_city"}
+    - please show me ground transportation in [Denver]{"entity": "city", "role": "ground_city"}
+    - i would like information on ground transportation in the city of [Atlanta]{"entity": "city", "role": "ground_city"} from airport to downtown
+    - tell me about ground transportation in [St. Petersburg]{"entity": "city", "role": "ground_city"} airport
+    - show me ground transportation in [Baltimore]{"entity": "city", "role": "ground_city"}
+    - is there ground transportation from the airport to downtown [Phoenix]{"entity": "city", "role": "ground_city"}?
+    - does the [Phoenix]{"entity": "city", "role": "ground_city"} airport have ground transportation to and from downtown?
+    - ground transportation [Oakland]{"entity": "city", "role": "ground_city"}
 - intent: curiosity
   examples: |
     - when was the first flight of the [Zeppelin-Staaken R.VI](aircraft) plane?
