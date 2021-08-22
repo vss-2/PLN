@@ -6,11 +6,10 @@ import nltk
 import spacy
 import tensorflow as tf
 from pandas import DataFrame
+from keras import backend as K
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense
-from spacy.lang.en.examples import sentences 
 from keras.layers.embeddings import Embedding
-from keras.preprocessing.text import one_hot
 from keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.layers.experimental.preprocessing import TextVectorization
 from tensorflow.keras.layers import Bidirectional
@@ -34,11 +33,6 @@ def main():
     def load_ds(fname='atis.train.pkl'):
         with open(fname, 'rb') as stream:
             ds, dicts = pickle.load(stream)
-        print('Done  loading: ', fname)
-        print('      samples: {:4d}'.format(len(ds['query'])))
-        print('   vocab_size: {:4d}'.format(len(dicts['token_ids'])))
-        print('   slot count: {:4d}'.format(len(dicts['slot_ids'])))
-        print(' intent count: {:4d}'.format(len(dicts['intent_ids'])))
         return ds, dicts
 
 
@@ -73,7 +67,6 @@ def main():
             labels.add(i2s[slots[i][j]])
         # print('*'*100)
 
-    # PRINTANDO DO TESTE
     query, slots, intent = map(
         test_ds.get, ['query', 'slot_labels', 'intent_labels'])
     cidades = []
@@ -95,13 +88,11 @@ def main():
     # cidades = set(cidades)
     # print(cidades)
 
-    # print('Token: ', dicts['token_ids'])
-    # print('Slot: ', dicts['slot_ids'])
-    # print('Intents:\n', *[i for i in dicts['intent_ids']], sep='\n')
     frases = [list(dicts['token_ids'].keys())[i]
             for t in train_ds['query'] for i in t]
     c = 10
     x = 0
+    # Altere o C e descomente para printar C frases
     # print('{} Frases:\n'.format(c))
     # for f in frases:
     #     if f == 'EOS':
@@ -155,20 +146,9 @@ def main():
     max_length = max([len(x) for x in X_train + X_test])
     vocab_size = len(dicts['token_ids'])
 
-    # print('Train exs:')
-    # print(*zip(X_train[:5], y_train[:5]), sep='\n')
-    # print('Test exs:')
-    # print(*zip(X_test[:5], y_test[:5]), sep='\n')
-
-
-    # --------------------- Código importado do outro colab -----------------------#
-
-
     encoder = TextVectorization(max_tokens=vocab_size)
     encoder.adapt(X_train+y_train)
     vocab_size = encoder.vocabulary_size()
-    # print(encoder.vocabulary_size())
-
 
     def get_intents(Y_train, num_intents):
         count = 0
@@ -195,25 +175,33 @@ def main():
         list(dicts['intent_ids'].keys()), len(set(list(dicts['intent_ids'].keys()))))
     y_train = encode_intents(y_train, intent_map)
     y_test = encode_intents(y_test, intent_map)
-    # print(intents)
-    # print(intent_map)
-    # print(y_train)
 
     y_train = pad_sequences(y_train, maxlen=num_intents, padding='pre')
     y_test = pad_sequences(y_test, maxlen=num_intents, padding='pre')
 
-    # print('Tamanho ytrain e ytest:', len(y_train), len(y_test))
-    # X_train, X_test = train_ds['query'], test_ds['query']
-    # print(X_train[:5], X_test[0])
-    # print(y_train[0], y_test[0])
-
     encoder = tf.keras.layers.experimental.preprocessing.TextVectorization(
         max_tokens=vocab_size)
 
-    # Original: encoder.adapt(list(X_train.values))
     X_train = DataFrame(X_train)
     X_test = DataFrame(X_test)
     encoder.adapt(X_train.values)
+
+    def recall_m(y_true, y_pred):
+        true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
+        possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
+        recall = true_positives / (possible_positives + K.epsilon())
+        return recall
+
+    def precision_m(y_true, y_pred):
+        true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
+        predicted_positives = K.sum(K.round(K.clip(y_pred, 0, 1)))
+        precision = true_positives / (predicted_positives + K.epsilon())
+        return precision
+
+    def f1_m(y_true, y_pred):
+        precision = precision_m(y_true, y_pred)
+        recall = recall_m(y_true, y_pred)
+        return 2*((precision*recall)/(precision+recall+K.epsilon()))
 
     running_model = Sequential([
         encoder,
@@ -227,25 +215,17 @@ def main():
 
     running_model.compile(loss=tf.keras.losses.CategoricalCrossentropy(),
                 optimizer=tf.keras.optimizers.Adam(1e-4),
-                metrics=['accuracy'])
+                metrics=['accuracy', f1_m, precision_m, recall_m])
     print('Tamanho Xtrain e ytrain:', len(X_train), len(y_train))
 
     # model.fit(X_train, y_train, epochs=20)
-    running_model.fit(X_train, y_train, epochs=5)
+    running_model.fit(X_train, y_train, epochs=50)
 
-    loss, accuracy = running_model.evaluate(X_train, y_train, verbose=1)
-    print('Training Accuracy is {}'.format(accuracy*100))
+    loss, accuracy, x, y, z = running_model.evaluate(X_train, y_train, verbose=1)
+    print('Training Accuracy is {}'.format(accuracy*100, x*100, y*100,z*100))
 
-    loss, accuracy = running_model.evaluate(X_test, y_test, verbose=1)
-    print('Test Accuracy is {}'.format(accuracy*100))
-    # running_model
-    # print(model.predict(["I would like to find informations about flights from New York to San Francisco"]))
-    # Colar código testando frases pra ver se ele tá com predict bom
-
-    # Célula 6 NER
-
-    # labels = set()
-
+    loss, accuracy, x, y, z = running_model.evaluate(X_test, y_test, verbose=1)
+    print('Test Accuracy is {}'.format(accuracy*100, x*100, y*100,z*100))
 
     def file2Examples(f):
         '''
@@ -284,18 +264,8 @@ def main():
     file2Examples(X_train)
     file2Examples(X_test)
 
-    # Célula 8 NER
-
-    # print(t2i, s2i, in2i)
-    # print(i2t, i2s, i2in)
-
-    # create character vocab
-    ########################################## MEXI NISSO HEIN #####################
     all_text = " ".join([" ".join(x[0]) for x in X_train.values])
     vocab = sorted(set(all_text))
-
-    # labels = list(dicts['intent_ids'].keys())
-    # create character/id and label/id mapping
 
     char2idx = {u: i+1 for i, u in enumerate(vocab)}
     char2idx2 = {u.upper(): i+1 for i, u in enumerate(vocab)}
@@ -321,6 +291,7 @@ def main():
 
     labels = set()
 
+    # Descomente se quiser ver frases
     # for i in range(len(query)):
     #     # print('{:4d}:{:>15}: {}'.format(i, i2in[intent[i][0]],
     #     #                                 ' '.join(map(i2t.get, query[i]))))
@@ -376,10 +347,6 @@ def main():
             k.append(i2t[query[i][j]])
         test.append([k, x])
 
-
-    # test, test_slots, test_intent =  map(test_ds.get, ['query', 'slot_labels', 'intent_labels'])
-    # / train_slots, train_intent =  map(train_ds.get, ['query', 'slot_labels', 'intent_labels'])
-
     def split_char_labels(eg):
         tokens = eg[0]
         labels = eg[1]
@@ -392,9 +359,6 @@ def main():
             output_char_labels.extend('O')
 
         a = [char2idx[x] for x in input_chars[:-1]]
-        # print(label2idx, '\n\n\n\n', output_char_labels)
-        # b = [np.array([idx2label[x] for x in output_char_labels[:-1]])]
-        # Bugado
         return [a]
     # [[frase], [resultado]]
 
@@ -405,30 +369,22 @@ def main():
     print(len(train_formatado))
     print(len(test_formatado))
 
-    # training generator
-
-
     def gen_train_series():
 
         for eg in train_formatted:
             yield eg[0], eg[1]
 
-        # validation generator
     def gen_valid_series():
 
         for eg in valid_formatted:
             yield eg[0],eg[1]
 
-        # test generator
-
-
     def gen_test_series():
 
         for eg in test_formatted:
             yield eg[0], eg[1]
+    
 
-
-    # create Dataset objects for train, test and validation sets
     series = tf.data.Dataset.from_generator(gen_train_series, output_types=(
         tf.int32, tf.int32), output_shapes=((None, None)))
     series_valid = tf.data.Dataset.from_generator(gen_valid_series, output_types=(
@@ -439,7 +395,7 @@ def main():
     BATCH_SIZE = 128
     BUFFER_SIZE = 1000
 
-    # create padded batch series objects for train, test and validation sets
+    
     ds_series_batch = series.shuffle(BUFFER_SIZE).padded_batch(
         BATCH_SIZE, padded_shapes=([None], [None]), drop_remainder=True)
     ds_series_batch_valid = series_valid.padded_batch(
@@ -449,35 +405,9 @@ def main():
 
     vocab_size = len(vocab)+1
 
-    # The embedding dimension
     embedding_dim = 256
-
-    # Number of RNN units
     rnn_units = 1024
-
     label_size = len(labels)
-
-    # build LSTM model
-
-    # def build_model(vocab_size, label_size, embedding_dim, rnn_units, batch_size):
-    #     model = tf.keras.Sequential([
-    #         tf.keras.layers.Embedding(vocab_size, embedding_dim,
-    #                                 batch_input_shape=[batch_size, None], mask_zero=True),
-    #         tf.keras.layers.LSTM(rnn_units,
-    #                             return_sequences=True,
-    #                             stateful=True,
-    #                             recurrent_initializer='glorot_uniform'),
-    #         tf.keras.layers.Dense(label_size)
-    #     ])
-    #     return model
-
-    # model = build_model(
-    #     vocab_size=len(vocab)+1,
-    #     label_size=len(labels)+1,
-    #     embedding_dim=embedding_dim,
-    #     rnn_units=rnn_units,
-    #     batch_size=BATCH_SIZE
-    # )
 
     # model.summary()
     return running_model, intent_map
