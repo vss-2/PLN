@@ -49,6 +49,8 @@ responses:
         - text: Where do you want to travel from?
     utter_found_flight:
         - text: You will travel from {from_city} to {destination_city}.
+    utter_found_ground:
+        - text: You want ground transportation on {ground_city}.
     utter_no_available_flights:
         - text: I'm sorry, I didn't find any flight available for the period that you've asked
     utter_show_available_flight:
@@ -79,3 +81,10 @@ forms:
       - type: from_entity
         entity: city
         role: destination_city
+
+  find_ground_form:
+    required_slots:
+      ground_city:
+      - type: from_entity
+        entity: city
+        role: ground_city
