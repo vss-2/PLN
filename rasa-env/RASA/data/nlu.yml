@@ -1,75 +1,99 @@
 version: "2.0"
 
 nlu:
-  - intent: find_flight
-    examples: |
-      - I want to schedule a flight
-      - Can you find me a flight?
-      - I would like to travel
-      - I wanna travel
-      - I want to travel
-      - I want to fly from [Boston]{"entity": "city", "role": "from_city"} at 838 am and arrive in [Denver]{"entity": "city", "role": "destination_city"} at 1110 in the morning.
-      - what flights are available from [Pittsburgh]{"entity": "city", "role": "from_city"} to [Baltimore]{"entity": "city", "role": "destination_city"} on thursday morning
-      - I need a flight tomorrow from [Columbus]{"entity": "city", "role": "from_city"} to [Minneapolis]{"entity": "city", "role": "destination_city"}
-      - show me the flights from [Pittsburgh]{"entity": "city", "role": "from_city"} to [Los Angeles]{"entity": "city", "role": "destination_city"} on thursday
-      - all flights from [Boston]{"entity": "city", "role": "from_city"} to [Washington]{"entity": "city", "role": "destination_city"}
-      - show me the flights from [Dallas]{"entity": "city", "role": "from_city"} to [San Francisco]{"entity": "city", "role": "destination_city"}
-      - show me the flights from [San Diego]{"entity": "city", "role": "from_city"} to [Newark]{"entity": "city", "role": "destination_city"} by way of houston
-      - what is the cheapest flight from [Boston]{"entity": "city", "role": "from_city"} to bwi
-      - all flights to [Baltimore]{"entity": "city", "role": "destination_city"} after 6 pm
-      - all flights from [Denver]{"entity": "city", "role": "from_city"} to [Pittsburgh]{"entity": "city", "role": "destination_city"} leaving after 6 pm and before 7 pm
-      - I need information on flights for tuesday leaving [Baltimore]{"entity": "city", "role": "from_city"} to [Seattle]{"entity": "city", "role": "destination_city"}
-      - please give me the flights from [Boston]{"entity": "city", "role": "from_city"} to [Pittsburgh]{"entity": "city", "role": "destination_city"} on thursday of next week
-      - I would like to fly from [Denver]{"entity": "city", "role": "from_city"} to [Pittsburgh]{"entity": "city", "role": "destination_city"} on united airlines
-      - show me the flights from [San Diego]{"entity": "city", "role": "from_city"} to [Newark]{"entity": "city", "role": "destination_city"}
-      - please list all first class flights on united from [Denver]{"entity": "city", "role": "from_city"} to [Baltimore]{"entity": "city", "role": "destination_city"}
-      - I'd like to book a flight from [Atlanta]{"entity": "city", "role": "from_city"} to [Denver]{"entity": "city", "role": "destination_city"}
-      - show me all flights from [Boston]{"entity": "city", "role": "from_city"} to [Pittsburgh]{"entity": "city", "role": "destination_city"} on wednesday of next week which leave Boston after 2 o'clock pm
-      - show me all flights from [New York]{"entity": "city", "role": "from_city"} to [Milwaukee]{"entity": "city", "role": "destination_city"} on northwest airlines departing at 720 am
-      - flights from [New York]{"entity": "city", "role": "from_city"} to [Miami]{"entity": "city", "role": "destination_city"}
-      - please find a flight on delta from [Philadelphia]{"entity": "city", "role": "from_city"} to [San Francisco]{"entity": "city", "role": "destination_city"} and give me the flight numbers
-      - i need a flight from [Dallas]{"entity": "city", "role": "from_city"} to [San Francisco]{"entity": "city", "role": "destination_city"}
-      - what are the flights from [St. Louis]{"entity": "city", "role": "from_city"} to [Burbank]{"entity": "city", "role": "destination_city"} sunday evening
-      - i 'd like to arrange a flight from [Pittsburgh]{"entity": "city", "role": "from_city"} to [Atlanta]{"entity": "city", "role": "destination_city"}
-      - show flights from [Baltimore]{"entity": "city", "role": "from_city"} to [San Francisco]{"entity": "city", "role": "destination_city"} between 6 pm and 8 pm on friday
-      - i would like a list of round trip flights between [Indianapolis]{"entity": "city", "role": "from_city"} and [Orlando Florida]{"entity": "city", "role": "destination_city"} for the twenty seventh and the twenty eighth of december
-      - [Pittsburgh]{"entity": "city", "role": "from_city"} to [Denver]{"entity": "city", "role": "destination_city"}
-      - I would like to fly from [Seattle]{"entity": "city", "role": "from_city"} to [Pittsburg]{"entity": "city", "role": "destination_city"}
-      - go from [Recife]{"entity": "city", "role": "from_city"} to [London]{"entity": "city", "role": "destination_city", "value": "London"}
-      - I would like to fly from [Recife]{"entity": "city", "role": "from_city"} to [London]{"entity": "city", "role": "destination_city"}
-      - I would like to fly to [London]{"entity": "city", "role": "destination_city"}
-      - from [Recife]{"entity": "city", "role": "from_city"}
-  - intent: ground_services
-    examples: |
-          - [atlanta](city) ground transportation 
-          - show me the ground transportation in [denver](city)
-          - what kind of ground transportation is available in [denver](city)
-          - show me information on ground transportation for [dallas](city) 
-  - intent: distance
-    examples: |
-          - how far is it from [orlando airport](airport) to [orlando](city)
-          - what's the distance between [newark](city) and [jfk](airport)
-  - intent: curiosity
-    examples: |
-          - when was the first flight of the [Zeppelin-Staaken R.VI](aircraft) plane?
-          - when did the [Zeppelin-Staaken R.VI](aircraft) plane take off for the first time?
-          - when was the first time the [Zeppelin-Staaken R.VI](aircraft) took off?
-          - what was the date of the first time the [Dornier Do X](aircraft) flew?
-          - What is the type of the [Dornier Do X](aircraft) plane?
-          - What type is the [Dornier Do X](aircraft) aircraft?
-          - What is the typing of the [Kalinin K-7](aircraft) aircraft?
-          - How many times was the [Kalinin K-7](aircraft) plane built?
-          - How many times has [Kalinin K-7](aircraft) been built?
-          - Show me how many times the [Tupolev ANT-20](aircraft) aircraft was built
-          - Tell me how many times the [Tupolev ANT-20](aircraft) plane was built
-          - How long is the [Tupolev ANT-20](aircraft) plane?
-          - Tell me the length of the [Douglas XB-19](aircraft) aircraft
-          - Show me the length of the [Douglas XB-19](aircraft) plane
-          - How long was the [Douglas XB-19](aircraft) plane?
-          - How wide is the [Messerschmitt Me 323](aircraft) plane?
-          - Tell me the width of the [Messerschmitt Me 323](aircraft) aircraft
-          - Show me the width of the [Messerschmitt Me 323](aircraft) plane
-          - How wide was the [Martin JRM Mars](aircraft) plane?
-          - What is the maximum take-off weight or [Martin JRM Mars](aircraft) plane?
-          - With how many weights maximum does the [Martin JRM Mars](aircraft) aircraft take off?
-          - Tell me how much weight the [Latécoère 631](aircraft) plane takes off
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+- intent: goodbye
+  examples: |
+    - good afternoon
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+- intent: find_flight
+  examples: |
+    - I want to schedule a flight
+    - Can you find me a flight?
+    - I would like to travel
+    - I wanna travel
+    - I want to travel
+    - I want to fly from [Boston]{"entity": "city", "role": "from_city"} at 838 am and arrive in [Denver]{"entity": "city", "role": "destination_city"} at 1110 in the morning.
+    - what flights are available from [Pittsburgh]{"entity": "city", "role": "from_city"} to [Baltimore]{"entity": "city", "role": "destination_city"} on thursday morning
+    - I need a flight tomorrow from [Columbus]{"entity": "city", "role": "from_city"} to [Minneapolis]{"entity": "city", "role": "destination_city"}
+    - show me the flights from [Pittsburgh]{"entity": "city", "role": "from_city"} to [Los Angeles]{"entity": "city", "role": "destination_city"} on thursday
+    - all flights from [Boston]{"entity": "city", "role": "from_city"} to [Washington]{"entity": "city", "role": "destination_city"}
+    - show me the flights from [Dallas]{"entity": "city", "role": "from_city"} to [San Francisco]{"entity": "city", "role": "destination_city"}
+    - show me the flights from [San Diego]{"entity": "city", "role": "from_city"} to [Newark]{"entity": "city", "role": "destination_city"} by way of houston
+    - what is the cheapest flight from [Boston]{"entity": "city", "role": "from_city"} to bwi
+    - all flights to [Baltimore]{"entity": "city", "role": "destination_city"} after 6 pm
+    - all flights from [Denver]{"entity": "city", "role": "from_city"} to [Pittsburgh]{"entity": "city", "role": "destination_city"} leaving after 6 pm and before 7 pm
+    - I need information on flights for tuesday leaving [Baltimore]{"entity": "city", "role": "from_city"} to [Seattle]{"entity": "city", "role": "destination_city"}
+    - please give me the flights from [Boston]{"entity": "city", "role": "from_city"} to [Pittsburgh]{"entity": "city", "role": "destination_city"} on thursday of next week
+    - I would like to fly from [Denver]{"entity": "city", "role": "from_city"} to [Pittsburgh]{"entity": "city", "role": "destination_city"} on united airlines
+    - show me the flights from [San Diego]{"entity": "city", "role": "from_city"} to [Newark]{"entity": "city", "role": "destination_city"}
+    - please list all first class flights on united from [Denver]{"entity": "city", "role": "from_city"} to [Baltimore]{"entity": "city", "role": "destination_city"}
+    - I'd like to book a flight from [Atlanta]{"entity": "city", "role": "from_city"} to [Denver]{"entity": "city", "role": "destination_city"}
+    - show me all flights from [Boston]{"entity": "city", "role": "from_city"} to [Pittsburgh]{"entity": "city", "role": "destination_city"} on wednesday of next week which leave Boston after 2 o'clock pm
+    - show me all flights from [New York]{"entity": "city", "role": "from_city"} to [Milwaukee]{"entity": "city", "role": "destination_city"} on northwest airlines departing at 720 am
+    - flights from [New York]{"entity": "city", "role": "from_city"} to [Miami]{"entity": "city", "role": "destination_city"}
+    - please find a flight on delta from [Philadelphia]{"entity": "city", "role": "from_city"} to [San Francisco]{"entity": "city", "role": "destination_city"} and give me the flight numbers
+    - i need a flight from [Dallas]{"entity": "city", "role": "from_city"} to [San Francisco]{"entity": "city", "role": "destination_city"}
+    - what are the flights from [St. Louis]{"entity": "city", "role": "from_city"} to [Burbank]{"entity": "city", "role": "destination_city"} sunday evening
+    - i 'd like to arrange a flight from [Pittsburgh]{"entity": "city", "role": "from_city"} to [Atlanta]{"entity": "city", "role": "destination_city"}
+    - show flights from [Baltimore]{"entity": "city", "role": "from_city"} to [San Francisco]{"entity": "city", "role": "destination_city"} between 6 pm and 8 pm on friday
+    - i would like a list of round trip flights between [Indianapolis]{"entity": "city", "role": "from_city"} and [Orlando Florida]{"entity": "city", "role": "destination_city"} for the twenty seventh and the twenty eighth of december
+    - [Pittsburgh]{"entity": "city", "role": "from_city"} to [Denver]{"entity": "city", "role": "destination_city"}
+    - I would like to fly from [Seattle]{"entity": "city", "role": "from_city"} to [Pittsburg]{"entity": "city", "role": "destination_city"}
+    - go from [Recife]{"entity": "city", "role": "from_city"} to [London]{"entity": "city", "role": "destination_city", "value": "London"}
+    - I would like to fly from [Recife]{"entity": "city", "role": "from_city"} to [London]{"entity": "city", "role": "destination_city"}
+    - I would like to fly to [London]{"entity": "city", "role": "destination_city"}
+    - from [Recife]{"entity": "city", "role": "from_city"}
+- intent: ground_services
+  examples: |
+    - [Atlanta]{"Entity": "city", "role": "ground_city"} ground transportation 
+    - show me the ground transportation in [Denver]{"Entity": "city", "role": "ground_city"}
+    - what kind of ground transportation is available in [denver](city)
+    - show me information on ground transportation for [dallas](city) 
+- intent: curiosity
+  examples: |
+    - when was the first flight of the [Zeppelin-Staaken R.VI](aircraft) plane?
+    - when did the [Zeppelin-Staaken R.VI](aircraft) plane take off for the first time?
+    - when was the first time the [Zeppelin-Staaken R.VI](aircraft) took off?
+    - what was the date of the first time the [Dornier Do X](aircraft) flew?
+    - What is the type of the [Dornier Do X](aircraft) plane?
+    - What type is the [Dornier Do X](aircraft) aircraft?
+    - What is the typing of the [Kalinin K-7](aircraft) aircraft?
+    - How many times was the [Kalinin K-7](aircraft) plane built?
+    - How many times has [Kalinin K-7](aircraft) been built?
+    - Show me how many times the [Tupolev ANT-20](aircraft) aircraft was built
+    - Tell me how many times the [Tupolev ANT-20](aircraft) plane was built
+    - How long is the [Tupolev ANT-20](aircraft) plane?
+    - Tell me the length of the [Douglas XB-19](aircraft) aircraft
+    - Show me the length of the [Douglas XB-19](aircraft) plane
+    - How long was the [Douglas XB-19](aircraft) plane?
+    - How wide is the [Messerschmitt Me 323](aircraft) plane?
+    - Tell me the width of the [Messerschmitt Me 323](aircraft) aircraft
+    - Show me the width of the [Messerschmitt Me 323](aircraft) plane
+    - How wide was the [Martin JRM Mars](aircraft) plane?
+    - What is the maximum take-off weight or [Martin JRM Mars](aircraft) plane?
+    - With how many weights maximum does the [Martin JRM Mars](aircraft) aircraft take off?
+    - Tell me how much weight the [Latécoère 631](aircraft) plane takes off
