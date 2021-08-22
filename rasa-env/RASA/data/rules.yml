@@ -25,3 +25,11 @@ rules:
   - active_loop: null
   - action: utter_found_flight
   - action: submit_flight_form
+
+- rule: Find Ground Transportation
+  steps:
+  - intent: ground_services
+  - action: find_ground_form
+  - active_loop: find_ground_form
+  - active_loop: null
+  - action: utter_found_ground
