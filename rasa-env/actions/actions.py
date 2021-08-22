@@ -95,6 +95,8 @@ class SubmitFlightForm(Action):
             date = datetime.fromisoformat(flight["departure_time"]).strftime("%d/%m/%Y")
             time = datetime.fromisoformat(flight["departure_time"]).strftime("%H:%M")
             dispatcher.utter_message("- departure-city: {}, destination-city: {}, date: {}, time: {}".format(source, destiny, date, time))
+        if len(response) == 0:
+            dispatcher.utter_message("I'm sorry, I didn't find any flight available for the period that you've asked")
         
 
         return [SlotSet("from_city", None), SlotSet("destination_city", None), SlotSet("time", None)]

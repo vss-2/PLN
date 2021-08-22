@@ -33,6 +33,8 @@ responses:
         - text: Hey there, my name is Brisa.
         - text: Hi, I'm Brisa!
         - text: Hi! My name's Brisa.
+    utter_presentation:
+        - text: I am you flight conversational assistant. I can help you find information on good flights and ground transportation in your destination city to make your travel flow as smoothly as possible! 😊 What do you want?
     utter_goodbye:
         - text: Bye
     utter_react_negative:
@@ -57,14 +59,6 @@ responses:
         - text: Here is the ground transportation available in {ground_city}.
     utter_no_available_flights:
         - text: I'm sorry, I didn't find any flight available for the period that you've asked
-    utter_show_available_flight:
-        - text: "I've found this flight: Flight {flight_number} from {from_city} to {destination_city} at {hour} on {month} {day}."
-    utter_find_flight_price:
-        - text: "I've found this flight: Flight {flight_number} from {from_city} to {destination_city} at {hour} on {month} {day} costing {price} dollars."
-    utter_find_flight:
-        - text: "OK, I'll try to find this flight for you"
-    airfare_find:
-        - text: "Here are some flights I've found according to what you asked: from {from_city} to {destination_city}"
 
 # Actions
 actions:
