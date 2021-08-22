@@ -54,7 +54,7 @@ responses:
     utter_found_flight:
         - text: "Here are the available flights from {from_city} to {destination_city} on the desired departure date:"
     utter_found_ground:
-        - text: You want ground transportation on {ground_city}.
+        - text: Here is the ground transportation available in {ground_city}.
     utter_no_available_flights:
         - text: I'm sorry, I didn't find any flight available for the period that you've asked
     utter_show_available_flight:
