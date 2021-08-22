@@ -20,7 +20,6 @@ public class FlightsController {
     
     @GetMapping
     public List<Flight> findFlights(@RequestBody Flight flight){
-        logger.info(flight.getDeparture_time().getTime()+"");
         return service.findFlights(flight.getSource(), flight.getDestiny(), flight.getDeparture_time());
     }
 }
