@@ -65,4 +65,4 @@ class SubmitFlightForm(Action):
             tracker: Tracker, 
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        return [SlotSet("from_city", None), SlotSet("destination_city", None)]
+        return [SlotSet("from_city", None), SlotSet("destination_city", None), SlotSet("time", None)]

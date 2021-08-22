@@ -13,7 +13,7 @@ intents:
 
 entities:
 - city
-- date
+- time
 
 slots:
     from_city:
@@ -25,6 +25,8 @@ slots:
     ground_city:
         type: text
         influence_conversation: false
+    time:
+        type: any
 
 responses:
     utter_greet:
@@ -47,20 +49,22 @@ responses:
         - text: Where do you want to travel to?
     utter_ask_from_city:
         - text: Where do you want to travel from?
+    utter_ask_time:
+        - text: When do you want to travel?
     utter_found_flight:
-        - text: You will travel from {from_city} to {destination_city}.
+        - text: You will travel from {from_city} to {destination_city} on {time}.
     utter_found_ground:
         - text: You want ground transportation on {ground_city}.
     utter_no_available_flights:
         - text: I'm sorry, I didn't find any flight available for the period that you've asked
     utter_show_available_flight:
-        - text: "I've found this flight: Flight {flight_number} from {origin_city} to {destination_city} at {hour} on {month} {day}."
+        - text: "I've found this flight: Flight {flight_number} from {from_city} to {destination_city} at {hour} on {month} {day}."
     utter_find_flight_price:
-        - text: "I've found this flight: Flight {flight_number} from {origin_city} to {destination_city} at {hour} on {month} {day} costing {price} dollars."
+        - text: "I've found this flight: Flight {flight_number} from {from_city} to {destination_city} at {hour} on {month} {day} costing {price} dollars."
     utter_find_flight:
         - text: "OK, I'll try to find this flight for you"
     airfare_find:
-        - text: "Here are some flights I've found according to what you asked: from {origin_city} to {destination_city}"
+        - text: "Here are some flights I've found according to what you asked: from {from_city} to {destination_city}"
 
 # Actions
 actions:
@@ -81,6 +85,9 @@ forms:
       - type: from_entity
         entity: city
         role: destination_city
+      time:
+      - type: from_entity
+        entity: time
 
   find_ground_form:
     required_slots:
