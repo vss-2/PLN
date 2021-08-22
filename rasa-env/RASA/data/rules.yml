@@ -1,28 +1,27 @@
 version: "2.0"
 
 rules:
-    # - rule: find flight
-    #   steps:
-    #   - intent: airfare_find
-    #   - action: utter_find_flight
+
+- rule: intro
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
 
 - rule: Elastic Search
   steps:
   - intent: curiosity
   - action: curiosity
 
-
 - rule: Find flight
   steps:
   - intent: find_flight
   - action: find_flight_form
   - active_loop: find_flight_form
-
-- rule: Submit flight
-  condition:
-  - active_loop: find_flight_form
-  steps:
-  - action: find_flight_form
   - active_loop: null
   - action: utter_found_flight
-  - action: action_restart
+  - action: submit_flight_form
