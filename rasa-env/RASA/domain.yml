@@ -5,31 +5,15 @@ session_config:
     carry_over_splots_to_new_session: true
 
 intents:
-# Juntei alguns que tinham um +
-- aircraft_info
-- airport_info
-- distance
-- flight_info
-- ground_info
+- greet
+- goodbye
+- ground_services
 - find_flight
-# - ground_fare
-# - ground_service
-- meal
 - curiosity
 
 entities:
 - city
-- airport
-- hour
-- day
-- month
-- price
-- flight_number
-- air_company
-- aircraft
-- airfare
-- ground_services
-- distance
+- time
 
 slots:
     from_city:
@@ -38,25 +22,11 @@ slots:
     destination_city:
         type: text
         influence_conversation: false
-    airport:
+    ground_city:
         type: text
-    hour:
-        # Pode ser número ou por extenso
+        influence_conversation: false
+    time:
         type: any
-    day:
-        type: any
-    month:
-        type: text
-    price:
-        type: text
-    flight_number:
-        type: text
-    air_company:
-        type: text
-    aircraft:
-        type: text
-    fare:
-        type: text
 
 responses:
     utter_greet:
@@ -65,10 +35,6 @@ responses:
         - text: Hi! My name's Brisa.
     utter_goodbye:
         - text: Bye
-    utter_greet_noname:
-        - text: Hey!
-        - text: Hi!
-        - text: Hey there!
     utter_react_negative:
         - text: 😕
         - text: 😞
@@ -83,28 +49,22 @@ responses:
         - text: Where do you want to travel to?
     utter_ask_from_city:
         - text: Where do you want to travel from?
+    utter_ask_time:
+        - text: When do you want to travel?
     utter_found_flight:
-        - text: You will travel from {from_city} to {destination_city}.
-    utter_ask_name:
-        - text: What's your name?
+        - text: You will travel from {from_city} to {destination_city} on {time}.
+    utter_found_ground:
+        - text: You want ground transportation on {ground_city}.
     utter_no_available_flights:
         - text: I'm sorry, I didn't find any flight available for the period that you've asked
     utter_show_available_flight:
-        - text: "I've found this flight: Flight {flight_number} from {origin_city} to {destination_city} at {hour} on {month} {day}."
+        - text: "I've found this flight: Flight {flight_number} from {from_city} to {destination_city} at {hour} on {month} {day}."
     utter_find_flight_price:
-        - text: "I've found this flight: Flight {flight_number} from {origin_city} to {destination_city} at {hour} on {month} {day} costing {price} dollars."
+        - text: "I've found this flight: Flight {flight_number} from {from_city} to {destination_city} at {hour} on {month} {day} costing {price} dollars."
     utter_find_flight:
         - text: "OK, I'll try to find this flight for you"
-    utter_find_airfare:
-        - text: The airfare price is {airfare}
-    utter_confirm_ground_services:
-        - text: Yes, this airport can offer {ground_services} 
-    utter_deny_ground_services:
-        - text: Unfortunately, these services are not available {ground_services} 
-    utter_distance:
-        - text: The distance from {city} to {airport} is {distance} miles
     airfare_find:
-        - text: "Here are some flights I've found according to what you asked: from {origin_city} to {destination_city}"
+        - text: "Here are some flights I've found according to what you asked: from {from_city} to {destination_city}"
 
 # Actions
 actions:
@@ -125,3 +85,13 @@ forms:
       - type: from_entity
         entity: city
         role: destination_city
+      time:
+      - type: from_entity
+        entity: time
+
+  find_ground_form:
+    required_slots:
+      ground_city:
+      - type: from_entity
+        entity: city
+        role: ground_city
