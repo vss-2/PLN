@@ -5,8 +5,6 @@ import java.util.List;
 import com.fbma.brisa.model.Flight;
 import com.fbma.brisa.services.FlightService;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,8 +17,6 @@ public class FlightsController {
 
     @Autowired
     private FlightService service;
-
-    private Logger logger = LoggerFactory.getLogger(Logger.class);
     
     @GetMapping
     public List<Flight> findFlights(@RequestBody Flight flight){
